@@ -1,0 +1,30 @@
+services:
+  rabbit-north:
+    image: rabbitmq:4.0.6-management-alpine
+    container_name: rabbit-north
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - rabbitmq-network
+    volumes:
+      - ./rmq-north:/etc/rabbitmq
+
+  rabbit-south:
+    image: rabbitmq:4.0.6-management-alpine
+    container_name: rabbit-south
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    networks:
+      - rabbitmq-network
+    volumes:
+      - ./rmq-south:/etc/rabbitmq
+
+networks:
+  rabbitmq-network:
+    driver: bridge
+
+volumes:
+  rmq-north:
+  rmq-south:
