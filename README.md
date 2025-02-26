@@ -13,7 +13,9 @@ This is a simple test case to set up two RMQ containers and experiment with fede
 * there are 2 scripts to set either rmq-north or rmq-south as the federation upstream node
 
 #### Background
-I had an expectation based on various docs that if I set up some queues on rmq-north, then set north as the upstream on south, then the messages arriving at north would be replicated to south. This does not appear to happen. The only way I can get anything similar is to set *south* as the upstream of *north*, at which point the queue from north becomes visible in the south admin GUI. However, there are no messages visible.
+I had an expectation based on various docs that if I set up some queues on an exchange on rmq-north, then set north as the upstream on south, then the messages arriving at north would be replicated to south - assuming a suitable policy to replicate the exchange. This does not appear to happen. The only way I can get anything similar is to set *south* as the upstream of *north*, at which point the exchange & queue from north becomes visible in the south admin GUI. However, there are still no messages visible.
+
+My aim here is to test exchange federation to support DR, rather than queue federation to support load balancing/distribution.
 
 This test case was set up to support a discussion on the [rabbitmq-users](https://groups.google.com/g/rabbitmq-users) google group.
 
@@ -21,14 +23,14 @@ This test case was set up to support a discussion on the [rabbitmq-users](https:
 * Clear down any traffic and queues with worker and qcleanup
 * Run set-north-upstream.sh - this will add rmq-north as an upstream for rmq-south and add a simple policy
 * Confirm Federation Upstreams & Status and Policies are as expected in the Admin tab
-* Run qsender to start generating traffic (probably a good idea to run qworker 5672 fedq00 in another window)
+* Run qsender to setup exchange and queue and start generating traffic (probably a good idea to run qworker 5672 fedq00 in another window)
 * Confirm visible traffic in the rmq-north Overview pane
 * No fedq00 or other entities are visible in rmq-south - *I WAS EXPECTING TO SEE FEDERATED MESSAGES ARRIVING HERE*
 #### Scenario 2
 * Clear down any traffic and queues with worker and qcleanup
 * Run set-south-upstream.sh - this will add rmq-south as an upstream for rmq-north and add a simple policy
 * Confirm Federation Upstreams & Status and Policies are as expected in the Admin tab
-* Run qsender to start generating traffic (probably a good idea to run qworker 5672 fedq00 in another window) - NOTE again we are sending traffic to rmq-north
+* Run qsender to setup exchange and queue and start generating traffic (probably a good idea to run qworker 5672 fedq00 in another window)
 * Confirm visible traffic in the rmq-north Overview pane
 * NOW we can see the fedtest exchange and fedq00 queue in rmq-south - *I WOULD NOT EXPECT THIS AS SOUTH NODE IS NOW THE 'UPSTREAM'?!*
 * We *still* however do not see any messages at rmq-south
