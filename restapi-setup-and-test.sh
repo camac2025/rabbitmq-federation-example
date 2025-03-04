@@ -3,9 +3,6 @@
 # Upstream servers are the servers towards where messages are originally published
 # Downstream servers are where the messages get forwarded to
 
-# 
-# conn, err := amqp.Dial("amqp://ibg:ibg@192.168.0.242:5672/")
-# Two clusters
 CREDS="guest:guest"
 VHOST="%2F"
 UPHOST="192.168.0.200"
