@@ -4,7 +4,7 @@
 # Downstream servers are where the messages get forwarded to
 
 # Two clusters
-CREDS="admin:admin"
+CREDS="guest:guest"
 VHOST="%2F"
 UPHOST="192.168.0.241"
 DOWNHOST="192.168.0.242"
