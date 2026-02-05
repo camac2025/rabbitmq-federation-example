@@ -16,7 +16,7 @@ HTTPS_DNSTREAM="http://$CREDS@${DOWNHOST}:15672"
 HTTPS_UPSTREAM="http://$CREDS@${UPHOST}:15672"
 
 #Publish a message to upstream - will end up on both upstream and downstream
-printf "\npublish\n---------------------------------------\n"
+printf "\nPublish\n---------------------------------------\n"
 curl -i -X POST -H "Content-Type: text/plain" "$HTTPS_UPSTREAM/api/exchanges/$VHOST/${EXCHANGE_NAME}/publish" \
       -d '{"properties":{},"routing_key":"'${RKEY}'","payload":"msg1","payload_encoding":"string"}'
 
